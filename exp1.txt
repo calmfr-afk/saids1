@@ -1,0 +1,36 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+
+# Load dataset
+iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+
+# Add species names
+df['Species'] = pd.Series(iris.target).map({
+    0: 'Setosa', 1: 'Versicolor', 2: 'Virginica'
+})
+
+# Display dataset information
+print(df.head())
+print(df.info())
+print("Shape:", df.shape)
+print(df.isnull().sum())
+print(df.describe())
+
+# Histogram
+df.hist(figsize=(8, 6))
+plt.show()
+
+# Box plot
+sns.boxplot(data=df.iloc[:, :4])
+plt.show()
+
+# Pair plot
+sns.pairplot(df, hue="Species")
+plt.show()
+
+# Correlation heatmap
+sns.heatmap(df.iloc[:, :4].corr(), annot=True)
+plt.show()
